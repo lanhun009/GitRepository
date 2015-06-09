@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<constant name="struts.devMode" value="false" />       <!-- 设置了程序的运行模式 -->
+    <constant name="struts.locale" value="zh_CN"/>         <!-- 设置程序运行所使用的locale -->
+    <constant name="struts.i18n.encoding" value="utf-8"/>  <!-- 设置程序运行时用的编码方式 -->
+    <!-- 正确设置后面两个参数，就可以解决Struts2的中文问题了。 -->
+
+	<package name="login" extends="struts-default,json-default">
+		
+		 <!-- 定义一个拦截器 -->  
+        <interceptors>  
+            <interceptor name="authority"  
+                class="com.sunny.vod.struts2.intercepter.LoginInterceptor">  
+            </interceptor>  
+            <!-- 拦截器栈 -->  
+            <interceptor-stack name="mydefault">  
+                <interceptor-ref name="defaultStack" />  
+                <interceptor-ref name="authority" >
+                	<param name="excludeMethods">execute,getInfo</param>
+                 </interceptor-ref> 
+            </interceptor-stack>  
+        </interceptors>  
+         <!-- 修改默认拦截器 -->  
+       
+        <default-interceptor-ref name="mydefault"/> 
+        
+        
+         <!-- 定义全局Result -->  
+        <global-results>  
+            <!-- 当返回login视图名时，转入/login.jsp页面 -->  
+            <result name="login">/Login/login.jsp</result>  
+        </global-results>  
+        
+		
+		<action name="login" class="com.sunny.vod.struts2.action.LoginAction">
+
+			<result name="input">/Login/login.jsp</result>
+
+			<result name="success"  type="redirect">/list!getListBypg.action</result>
+			
+			<result name="failer">/failer.jsp</result>
+		</action>
+		<action name="logout" class="com.sunny.vod.struts2.action.LoginAction" method="logout">
+
+			
+
+			<result name="success"  type="redirect">/Login/login.jsp</result>
+			
+			
+		</action>
+		<action name="list" class="com.sunny.vod.struts2.action.VodInfoAction" method="getListBypg">  
+           <result>/VodInfoManager/index.jsp</result>  
+           
+        </action>
+        
+        <action name="list1" class="com.sunny.vod.struts2.action.VodInfoAction" method="getListBypg">
+			<result name="success" >/VodInfoManager/Node/index.jsp
+		   </result>
+			
+		</action> 
+		
+		<action name="vodinfolist" class="com.sunny.vod.struts2.action.VodInfoAction" method="getList"><!-- 列表 -->
+			<result name="success" >VodInfoManager/index.jsp
+		   </result>
+			
+		</action>
+		<action name="vodinfolist1" class="com.sunny.vod.struts2.action.VodInfoAction" method="getList">
+			<result name="success" >/VodInfoManager/Node/index.jsp
+		   </result>
+			
+		</action>
+		<action name="vodinfoadd" class="com.sunny.vod.struts2.action.VodInfoAction" method="add"><!-- 增加 -->
+			<result name="success" type="redirect">/list1!getListBypg.action
+		   </result>
+			
+		</action>
+		<action name="vodinfoload" class="com.sunny.vod.struts2.action.VodInfoAction" method="load"><!-- 修改页面跳转 -->
+			<result name="success">/VodInfoManager/Node/edit.jsp
+		   </result>
+			
+		</action>
+		<action name="vodinfoupdate" class="com.sunny.vod.struts2.action.VodInfoAction" method="update"><!-- 修改 -->
+			<result name="success" type="redirect">/list1!getListBypg.action
+		   </result>
+			
+		</action>
+	
+		<action name="vodinfodel" class="com.sunny.vod.struts2.action.VodInfoAction" method="del"><!-- 删除 -->
+			<result name="success" type="redirect">/list1!getListBypg.action
+		   </result>
+			
+		</action>
+		<action name="vodinfolistbyname" class="com.sunny.vod.struts2.action.VodInfoAction" method="getListByName"><!-- 查询列表 -->
+			<result name="success" >/VodInfoManager/Node/index.jsp
+		   </result>
+			
+		</action>
+
+		<!--查询接口  -->
+		<action name="vodinfo" class="com.sunny.vod.struts2.action.VodInfoAction" method="getInfo">
+			<result name="success" type="json">
+				<param name="root">result</param>
+                <param name="contentType">text/html</param>
+			</result>
+		</action>
+		
+		
+	</package>
+</struts>    

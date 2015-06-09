@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+<WatchedResource>WEB-INF/web.xml</WatchedResource>
+<Resource name="jdbc/vodinfo" auth="Container"  
+type="javax.sql.DataSource"
+factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
+ 
+initialSize="100"
+maxActive="1000"
+maxIdle="500"
+minIdle="100"
+maxWait="15000"
+
+testWhileIdle="true"
+testOnBorrow="true"
+testOnReturn="true"
+validationQuery="SELECT 1"
+validationInterval="30000"
+
+timeBetweenEvictionRunsMillis="60000"
+minEvictableIdleTimeMillis="60000"
+
+removeAbandoned="true"
+removeAbandonedTimeout="100"
+logAbandoned="true"
+
+jmxEnabled="true"
+
+
+jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+username="root"
+password="root"
+driverClassName="com.mysql.jdbc.Driver"
+url="jdbc:mysql://localhost:3306/hysxpt?useUnicode=true&amp;characterEncoding=UTF-8"/>
+</Context>
